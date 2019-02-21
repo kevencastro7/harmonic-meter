@@ -21,7 +21,7 @@ int main(void)
 {
 	port_init();
 	led_init();
-	uint32_t tempo = port_micros();
+	uint32_t tempo;
 
 	int tam = 128 * 12;
 	int nc = tam/2 + 1;
