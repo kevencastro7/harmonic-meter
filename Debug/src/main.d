@@ -37,7 +37,9 @@ src/main.o: ../src/main.c \
  C:/Users/Keven/Documents/workbench/medidor_f4/Utilities/stm32f4_discovery.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fftr.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h
+ C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h
 
 C:/Users/Keven/Documents/workbench/medidor_f4/CMSIS/device/stm32f4xx.h:
 
@@ -116,3 +118,7 @@ C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h:
 C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fftr.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h:
+
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h:
+
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h:

@@ -15,6 +15,7 @@
 #include "kiss_fft.h"
 #include "kiss_fftr.h"
 #include "math.h"
+#include "structs.h"
 #define PI 3.14159265359
 
 int main(void)
@@ -22,7 +23,7 @@ int main(void)
 	port_init();
 	led_init();
 	uint32_t tempo;
-
+	controller* ct = (controller *) malloc(sizeof(controller));
 	int tam = 128 * 12;
 	int nc = tam/2 + 1;
 	kiss_fftr_cfg cfg = kiss_fftr_alloc( tam ,0 ,NULL,NULL );
