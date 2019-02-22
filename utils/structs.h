@@ -43,7 +43,6 @@ typedef struct {
 	float IA;
 	float IB;
 	float IC;
-	float IN;
 }calibration_wfb_json_t;
 
 typedef struct {
@@ -53,7 +52,6 @@ typedef struct {
   int16_t IB[WFB_ELEMENT_ARRAY_SIZE];
   int16_t VC[WFB_ELEMENT_ARRAY_SIZE];
   int16_t IC[WFB_ELEMENT_ARRAY_SIZE];
-  int16_t IN[WFB_ELEMENT_ARRAY_SIZE];
 }burst_read_t;
 
 typedef struct {
@@ -80,10 +78,6 @@ typedef struct {
 	int    IC_CONT;
 	float IC_ABS[ESPECTRO_ARRAY_SIZE];
 	float IC_ANG[ESPECTRO_ARRAY_SIZE];
-
-	int    IN_CONT;
-	float IN_ABS[ESPECTRO_ARRAY_SIZE];
-	float IN_ANG[ESPECTRO_ARRAY_SIZE];
 }espectro_t;
 
 typedef struct{
