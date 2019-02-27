@@ -53,4 +53,5 @@ int main(void)
 	free(cx_in);
 	free(cx_out);
 	free(cfg);
+	free(ct);
 }

@@ -86,6 +86,7 @@ typedef struct{
 	device_json_t			device_json;
 	calibration_wfb_json_t 	calibration_wfb_json;
 	burst_read_t			burst_read;
+	burst_read_t			buffer_read;
 	espectro_t				espectro;
 }controller;
 
