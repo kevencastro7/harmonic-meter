@@ -16,42 +16,30 @@
 #include "kiss_fftr.h"
 #include "math.h"
 #include "structs.h"
+#include "tm_stm32f4_spi.h"
 #define PI 3.14159265359
 
 int main(void)
 {
 	port_init();
 	led_init();
-	uint32_t tempo;
-	controller* ct = (controller *) malloc(sizeof(controller));
-	int tam = 128 * 12;
-	int nc = tam/2 + 1;
-	kiss_fftr_cfg cfg = kiss_fftr_alloc( tam ,0 ,NULL,NULL );
-	kiss_fft_scalar* cx_in = (kiss_fft_scalar *) malloc(tam * sizeof(kiss_fft_scalar));
-	kiss_fft_cpx* cx_out = (kiss_fft_cpx *) malloc(nc * sizeof(kiss_fft_cpx));
+	uint16_t Data_in[2];
+	uint16_t Data_out[] = {0x00B8, 0x1234, 0x5678};
+	uint16_t dummy = 0x00B8;
+	led_write(LED4_PIN, 1);
+	TM_SPI_Init(SPI1, TM_SPI_PinsPack_1);
 
-	for (int i = 0; i<tam;i++)
-	{
-		cx_in[i] = cos(2*PI*i/128) + 0.5*cos(4*PI*i/128);
-	}
 
 	while (1)
 	{
-		tempo = port_micros();
-
-		led_write(GPIO_Pin_All,1);
-		for(int i = 0;i<6;i++)
-		{
-			kiss_fftr( cfg , cx_in , cx_out );
-		}
-		led_write(GPIO_Pin_All,0);
-		tempo = port_micros()-tempo;
-
-		port_sleep_ms(500);
+		led_write(LED4_PIN, 0);
+		TM_SPI_WriteMulti16(SPI1, Data_out, 3);
+		led_write(LED4_PIN, 1);
+		//port_sleep_ms(10);
+		led_write(LED4_PIN, 0);
+		TM_SPI_Read(SPI1, Data_in, dummy, 2);
+		led_write(LED4_PIN, 1);
+		//port_sleep_ms(10);
 	}
-
-	free(cx_in);
-	free(cx_out);
-	free(cfg);
-	free(ct);
+	free(Data_in);
 }
