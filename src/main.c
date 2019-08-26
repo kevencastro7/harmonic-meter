@@ -23,23 +23,23 @@ int main(void)
 {
 	port_init();
 	led_init();
-	uint16_t Data_in[2];
-	uint16_t Data_out[] = {0x00B8, 0x1234, 0x5678};
-	uint16_t dummy = 0x00B8;
-	led_write(LED4_PIN, 1);
+	uint16_t Data_in[3];
+	uint16_t Data_out[] = {0x00B7, 0x0001, 0xFFFE};
+	uint16_t dummy = 0x00BF;
+	led_write(GPIO_Pin_5, 1);
+	/* SCK = PA5, MOSI = PA7, MISO = PA6 */
 	TM_SPI_Init(SPI1, TM_SPI_PinsPack_1);
-
 
 	while (1)
 	{
-		led_write(LED4_PIN, 0);
+		led_write(GPIO_Pin_5, 0);
 		TM_SPI_WriteMulti16(SPI1, Data_out, 3);
-		led_write(LED4_PIN, 1);
-		//port_sleep_ms(10);
-		led_write(LED4_PIN, 0);
-		TM_SPI_Read(SPI1, Data_in, dummy, 2);
-		led_write(LED4_PIN, 1);
-		//port_sleep_ms(10);
+		led_write(GPIO_Pin_5, 1);
+		//port_sleep_ms(1);
+		led_write(GPIO_Pin_5, 0);
+		TM_SPI_ReadMulti16(SPI1, Data_in, dummy, 3);
+		led_write(GPIO_Pin_5, 1);
+		//port_sleep_us(5);
 	}
 	free(Data_in);
 }

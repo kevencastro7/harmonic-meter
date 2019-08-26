@@ -339,9 +339,17 @@ void TM_SPI_Read(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32_t c
 
 	/* Wait for previous transmissions to complete if DMA TX enabled for SPI */
 	SPI_WAIT(SPIx);
+
 	SPIx->DR = dummy;
+
 	SPI_WAIT(SPIx);
+
+	(void)SPIx->DR;
+
 	for (i = 0; i < count; i++) {
+		SPI_WAIT(SPIx);
+		SPIx->DR = dummy;
+		SPI_WAIT(SPIx);
 		dataIn[i] = SPIx->DR;
 	}
 }
