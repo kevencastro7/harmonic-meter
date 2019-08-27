@@ -13,6 +13,7 @@
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_spi.h"
 #include "stm32f4xx_dma.h"
+#include "string.h"
 
 /**
  * @brief  Check SPI busy status
@@ -33,12 +34,18 @@
  * @brief  Checks if SPI is enabled and returns value from function if not
  */
 #define SPI_CHECK_ENABLED_RESP(SPIx, val)   if (!((SPIx)->CR1 & SPI_CR1_SPE)) {return (val);}
-
+uint32_t pTmpBuf1[2048];
+GPIO_TypeDef* GPIOx_CS;
+uint16_t GPIO_Pin_CS;
 void spi_init( void );
+void chip_select_init();
+void chip_select();
+void chip_deselect();
 void gpio_init(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed, uint8_t Alternate);
 void gpio_int_init (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOMode_TypeDef GPIO_Mode, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed);
 void dma_init( void );
 void SPI_WriteMulti16(SPI_TypeDef* SPIx, uint16_t* dataOut, uint32_t count);
 void SPI_ReadMulti16(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32_t count);
-
+void set_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado,  uint16_t* dado);
+void get_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado);
 #endif /* SPI_H_ */

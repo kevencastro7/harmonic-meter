@@ -19,6 +19,9 @@ void spi_init( void )
 	/* Init pins */
 	gpio_init(GPIOA, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, GPIO_OType_PP, GPIO_PuPd_NOPULL, GPIO_High_Speed, GPIO_AF_SPI1);
 
+	GPIOx_CS = GPIOC;
+	GPIO_Pin_CS = GPIO_Pin_5;
+	chip_select_init();
 	/* Set options */
 	SPI_InitStruct.SPI_DataSize = SPI_DataSize_16b;
 
@@ -41,8 +44,37 @@ void spi_init( void )
 
 	/* Enable SPI */
 	SPI1->CR1 |= SPI_CR1_SPE;
-	dma_init();
+	//dma_init();
 
+}
+
+
+void chip_select_init()
+{
+	GPIO_InitTypeDef gpio;
+	if(GPIOx_CS == GPIOA)
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	else if(GPIOx_CS == GPIOB)
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	else if(GPIOx_CS == GPIOC)
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	else if(GPIOx_CS == GPIOD)
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+
+	gpio.GPIO_Pin = GPIO_Pin_CS;
+	gpio.GPIO_Mode = GPIO_Mode_OUT;
+	gpio.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOx_CS, &gpio);
+}
+
+void chip_select()
+{
+	GPIO_WriteBit(GPIOx_CS, GPIO_Pin_CS, 0);
+}
+
+void chip_deselect()
+{
+	GPIO_WriteBit(GPIOx_CS, GPIO_Pin_CS, 1);
 }
 
 void gpio_init(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed, uint8_t Alternate)
@@ -104,12 +136,7 @@ void gpio_int_init (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOMode_TypeDef GPI
 
 void dma_init( void )
 {
-	int tx_len = 150;
-	uint16_t pTmpBuf1[150];
-	for(int i = 0 ; i < 150; i++)
-	{
-		pTmpBuf1[i] = 0x8018;
-	}
+	pTmpBuf1[0] = 0x8018;
 
 	DMA_InitTypeDef DMA_InitStructure;
 
@@ -122,7 +149,7 @@ void dma_init( void )
 	DMA_DeInit(DMA2_Stream3); //SPI1_TX_DMA_STREAM
 	DMA_DeInit(DMA2_Stream2); //SPI1_RX_DMA_STREAM
 
-	DMA_InitStructure.DMA_BufferSize = (uint16_t)(tx_len + 3);
+	DMA_InitStructure.DMA_BufferSize = (uint16_t)4098;
 
 	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable ;
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull ;
@@ -152,13 +179,13 @@ void dma_init( void )
 
 	DMA_Cmd(DMA2_Stream3, ENABLE); /* Enable the DMA SPI TX Stream */
 	DMA_Cmd(DMA2_Stream2, ENABLE); /* Enable the DMA SPI RX Stream */
+
+	/*Configure Interrupt*/
 	DMA_ITConfig(DMA2_Stream2, DMA_IT_TC, ENABLE);
-
 	NVIC_InitTypeDef   NVIC_InitStructure;
-
 	NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream2_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
@@ -172,7 +199,8 @@ void dma_init( void )
 	//while (DMA_GetFlagStatus(DMA2_Stream2, DMA_FLAG_TCIF2)==RESET);
 }
 
-void SPI_WriteMulti16(SPI_TypeDef* SPIx, uint16_t* dataOut, uint32_t count) {
+void SPI_WriteMulti16(SPI_TypeDef* SPIx, uint16_t* dataOut, uint32_t count)
+{
 	uint32_t i;
 
 	/* Check if SPI is enabled */
@@ -193,7 +221,8 @@ void SPI_WriteMulti16(SPI_TypeDef* SPIx, uint16_t* dataOut, uint32_t count) {
 	}
 }
 
-void SPI_ReadMulti16(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32_t count) {
+void SPI_ReadMulti16(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32_t count)
+{
 	uint32_t i;
 
 	/* Check if SPI is enabled */
@@ -212,4 +241,74 @@ void SPI_ReadMulti16(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32
 		/* Save data to buffer */
 		dataIn[i] = SPIx->DR;
 	}
+}
+
+void set_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado)
+
+{
+	chip_select();
+	endereco_registrador = ((endereco_registrador << 4) & 0xFFF0); //Desloca o endereço para a esquerda e configura o bit 4 como 0
+
+	uint32_t i;
+
+	/* Check if SPI is enabled */
+	SPI_CHECK_ENABLED(SPI1);
+
+	/* Wait for previous transmissions to complete if DMA TX enabled for SPI */
+	SPI_WAIT(SPI1);
+
+	SPI1->DR = endereco_registrador;
+
+	/* Wait for SPI to end everything */
+	SPI_WAIT(SPI1);
+
+	/* Read data register */
+	(void)SPI1->DR;
+
+	for (i = 0; i < tamanho_dado; i++) {
+		/* Fill output buffer with data */
+		SPI1->DR = dado[i];
+
+		/* Wait for SPI to end everything */
+		SPI_WAIT(SPI1);
+
+		/* Read data register */
+		(void)SPI1->DR;
+	}
+	chip_deselect();
+
+}
+
+void get_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado)
+{
+	chip_select();
+	endereco_registrador = (((endereco_registrador << 4) & 0xFFF0)+8); //Desloca o endereço para a esquerda e configura o bit 4 como 1
+
+	uint32_t i;
+
+	/* Check if SPI is enabled */
+	SPI_CHECK_ENABLED(SPI1);
+
+	/* Wait for previous transmissions to complete if DMA TX enabled for SPI */
+	SPI_WAIT(SPI1);
+
+	SPI1->DR = endereco_registrador;
+
+	/* Wait for SPI to end everything */
+	SPI_WAIT(SPI1);
+
+	/* Read data register */
+	(void)SPI1->DR;
+
+	for (i = 0; i < tamanho_dado; i++) {
+		/* Fill output buffer with data */
+		SPI1->DR = endereco_registrador;
+
+		/* Wait for SPI to end everything */
+		SPI_WAIT(SPI1);
+
+		/* Read data register */
+		dado[i] = SPI1->DR;
+	}
+	chip_deselect();
 }

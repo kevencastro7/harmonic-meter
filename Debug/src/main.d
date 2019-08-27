@@ -44,7 +44,8 @@ src/main.o: ../src/main.c \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_rcc.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_gpio.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_spi.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dma.h
+ C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dma.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/ADE9000_Defines.h
 
 C:/Users/Keven/Documents/workbench/medidor_f4/CMSIS/device/stm32f4xx.h:
 
@@ -137,3 +138,5 @@ C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_gpi
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_spi.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dma.h:
+
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/ADE9000_Defines.h:
