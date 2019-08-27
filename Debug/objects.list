@@ -53,5 +53,6 @@
 "utils/fft.o"
 "utils/led.o"
 "utils/port.o"
+"utils/spi.o"
 "utils/tm_stm32f4_gpio.o"
 "utils/tm_stm32f4_spi.o"

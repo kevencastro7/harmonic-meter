@@ -89,5 +89,4 @@ typedef struct{
 	burst_read_t			buffer_read;
 	espectro_t				espectro;
 }controller;
-
 #endif /* INC_STRUCTS_H_ */

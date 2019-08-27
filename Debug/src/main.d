@@ -40,13 +40,10 @@ src/main.o: ../src/main.c \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/tm_stm32f4_spi.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/spi.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_rcc.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_gpio.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_spi.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/defines.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/attributes.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/tm_stm32f4_gpio.h
+ C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_spi.h
 
 C:/Users/Keven/Documents/workbench/medidor_f4/CMSIS/device/stm32f4xx.h:
 
@@ -130,16 +127,10 @@ C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h:
 
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/tm_stm32f4_spi.h:
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/spi.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_rcc.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_gpio.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_spi.h:
-
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/defines.h:
-
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/attributes.h:
-
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/tm_stm32f4_gpio.h:
