@@ -32,12 +32,23 @@ int main(void)
 
 	while (1)
 	{
-		led_write(GPIO_Pin_5, 0);
+		/*led_write(GPIO_Pin_5, 0);
 		SPI_WriteMulti16(SPI1, Data_out, 3);
 		led_write(GPIO_Pin_5, 1);
 		led_write(GPIO_Pin_5, 0);
 		SPI_ReadMulti16(SPI1, Data_in, dummy, 3);
-		led_write(GPIO_Pin_5, 1);
+		led_write(GPIO_Pin_5, 1);*/
 	}
 	free(Data_in);
+}
+
+void DMA2_Stream2_IRQHandler(void)
+{
+/* Test on DMA Stream Transfer Complete interrupt */
+if(DMA_GetITStatus(DMA2_Stream2, DMA_FLAG_TCIF2))
+{
+/* Clear DMA Stream Transfer Complete interrupt pending bit */
+DMA_ClearITPendingBit(DMA2_Stream2, DMA_FLAG_TCIF2);
+// Add code here to process buffer
+}
 }
