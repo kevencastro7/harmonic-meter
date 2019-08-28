@@ -19,7 +19,7 @@ void spi_init( void )
 
 	/* Init pins */
 	gpio_init(GPIOA, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, GPIO_OType_PP, GPIO_PuPd_NOPULL, GPIO_High_Speed, GPIO_AF_SPI1);
-
+	irq0_gpio_init();
 	GPIOx_CS = GPIOC;
 	GPIO_Pin_CS = GPIO_Pin_5;
 	chip_select_init();
@@ -278,6 +278,20 @@ int configuracao_default()
 		if(temp[i] != DEFAULT_EP_CFG[i])
 			return 0;
 	}
+	set_registrador(WFB_PG_IRQEN, TAM_WFB_PG_IRQEN, DEFAULT_WFB_PG_IRQEN);
+	get_registrador(WFB_PG_IRQEN, TAM_WFB_PG_IRQEN, temp);
+	for (int i = 0; i < TAM_WFB_PG_IRQEN; i++)
+	{
+		if(temp[i] != DEFAULT_WFB_PG_IRQEN[i])
+			return 0;
+	}
+	set_registrador(MASK0, TAM_MASK0, DEFAULT_MASK0);
+	get_registrador(MASK0, TAM_MASK0, temp);
+	for (int i = 0; i < TAM_MASK0; i++)
+	{
+		if(temp[i] != DEFAULT_MASK0[i])
+			return 0;
+	}
 	return 1;
 }
 
@@ -349,4 +363,61 @@ void get_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint1
 		dado[i] = SPI1->DR;
 	}
 	chip_deselect();
+}
+
+void irq0_gpio_init( void )
+{
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    /* Enable clock for GPIOD */
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+    /* Enable clock for SYSCFG */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+    /* Set pin as input */
+    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0;
+    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_Init(GPIOD, &GPIO_InitStruct);
+}
+
+void irq0_init( void )
+{
+    clear_interrupt();
+    /* Set variables used */
+    EXTI_InitTypeDef EXTI_InitStruct;
+    NVIC_InitTypeDef NVIC_InitStruct;
+
+    /* Tell system that you will use PD0 for EXTI_Line0 */
+    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource0);
+
+    /* PD0 is connected to EXTI_Line0 */
+    EXTI_InitStruct.EXTI_Line = EXTI_Line0;
+    /* Enable interrupt */
+    EXTI_InitStruct.EXTI_LineCmd = ENABLE;
+    /* Interrupt mode */
+    EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
+    /* Triggers on rising and falling edge */
+    EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Falling;
+    /* Add to EXTI */
+    EXTI_Init(&EXTI_InitStruct);
+
+    /* Add IRQ vector to NVIC */
+    /* PD0 is connected to EXTI_Line0, which has EXTI0_IRQn vector */
+    NVIC_InitStruct.NVIC_IRQChannel = EXTI0_IRQn;
+    /* Set priority */
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x00;
+    /* Set sub priority */
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x00;
+    /* Enable interrupt */
+    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+    /* Add to NVIC */
+    NVIC_Init(&NVIC_InitStruct);
+}
+
+void clear_interrupt( void )
+{
+	set_registrador(STATUS0, TAM_STATUS0, DEFAULT_MASK0);
 }

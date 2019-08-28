@@ -47,4 +47,7 @@ void dma_init( void );
 int configuracao_default();
 void set_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado,  uint16_t* dado);
 void get_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado);
+void irq0_gpio_init( void );
+void irq0_init( void );
+void clear_interrupt( void );
 #endif /* SPI_H_ */

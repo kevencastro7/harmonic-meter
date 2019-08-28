@@ -997,6 +997,9 @@ uint16_t DEFAULT_ACCMODE[] = {0x0100};
 uint16_t DEFAULT_CONFIG3[] = {0x0000};
 uint16_t DEFAULT_WFB_CFG[] = {0x12F0};
 uint16_t DEFAULT_EP_CFG[] = {0x0022};
+uint16_t DEFAULT_WFB_PG_IRQEN[] = {0x8080};
+uint16_t DEFAULT_MASK0[] = {0x0002, 0x0000};
+uint16_t CLEAR_MASK0[] = {0x0000, 0x0000};
 
 /**
  * @def Fases
