@@ -6,6 +6,7 @@
  */
 
 #include <spi.h>
+#include "ADE9000_Defines.h"
 
 void spi_init( void )
 {
@@ -47,7 +48,6 @@ void spi_init( void )
 	//dma_init();
 
 }
-
 
 void chip_select_init()
 {
@@ -136,6 +136,7 @@ void gpio_int_init (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOMode_TypeDef GPI
 
 void dma_init( void )
 {
+	chip_select();
 	pTmpBuf1[0] = 0x8018;
 
 	DMA_InitTypeDef DMA_InitStructure;
@@ -180,7 +181,7 @@ void dma_init( void )
 	DMA_Cmd(DMA2_Stream3, ENABLE); /* Enable the DMA SPI TX Stream */
 	DMA_Cmd(DMA2_Stream2, ENABLE); /* Enable the DMA SPI RX Stream */
 
-	/*Configure Interrupt*/
+	/*Configure Interrupt */
 	DMA_ITConfig(DMA2_Stream2, DMA_IT_TC, ENABLE);
 	NVIC_InitTypeDef   NVIC_InitStructure;
 	NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream2_IRQn;
@@ -195,52 +196,89 @@ void dma_init( void )
 
 	SPI_Cmd(SPI1, ENABLE);
 
-	//while (DMA_GetFlagStatus(DMA2_Stream3, DMA_FLAG_TCIF3)==RESET);
-	//while (DMA_GetFlagStatus(DMA2_Stream2, DMA_FLAG_TCIF2)==RESET);
 }
 
-void SPI_WriteMulti16(SPI_TypeDef* SPIx, uint16_t* dataOut, uint32_t count)
+int configuracao_default()
 {
-	uint32_t i;
-
-	/* Check if SPI is enabled */
-	SPI_CHECK_ENABLED(SPIx);
-
-	/* Wait for previous transmissions to complete if DMA TX enabled for SPI */
-	SPI_WAIT(SPIx);
-
-	for (i = 0; i < count; i++) {
-		/* Fill output buffer with data */
-		SPIx->DR = dataOut[i];
-
-		/* Wait for SPI to end everything */
-		SPI_WAIT(SPIx);
-
-		/* Read data register */
-		(void)SPIx->DR;
+	uint16_t temp[2];
+	set_registrador(USER_PERIOD, TAM_USER_PERIOD, DEFAULT_USER_PERIOD);
+	get_registrador(USER_PERIOD, TAM_USER_PERIOD, temp);
+	for (int i = 0; i < TAM_USER_PERIOD; i++)
+	{
+		if(temp[i] != DEFAULT_USER_PERIOD[i])
+			return 0;
 	}
-}
-
-void SPI_ReadMulti16(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32_t count)
-{
-	uint32_t i;
-
-	/* Check if SPI is enabled */
-	SPI_CHECK_ENABLED(SPIx);
-
-	/* Wait for previous transmissions to complete if DMA TX enabled for SPI */
-	SPI_WAIT(SPIx);
-
-	for (i = 0; i < count; i++) {
-		/* Fill output buffer with data */
-		SPIx->DR = dummy;
-
-		/* Wait for SPI to end everything */
-		SPI_WAIT(SPIx);
-
-		/* Save data to buffer */
-		dataIn[i] = SPIx->DR;
+	set_registrador(VLEVEL, TAM_VLEVEL, DEFAULT_VLEVEL);
+	get_registrador(VLEVEL, TAM_VLEVEL, temp);
+	for (int i = 0; i < TAM_VLEVEL; i++)
+	{
+		if(temp[i] != DEFAULT_VLEVEL[i])
+			return 0;
 	}
+	set_registrador(DIP_LVL, TAM_DIP_LVL, DEFAULT_DIP_LVL);
+	get_registrador(DIP_LVL, TAM_DIP_LVL, temp);
+	for (int i = 0; i < TAM_DIP_LVL; i++)
+	{
+		if(temp[i] != DEFAULT_DIP_LVL[i])
+			return 0;
+	}
+	set_registrador(SWELL_LVL, TAM_SWELL_LVL, DEFAULT_SWELL_LVL);
+	get_registrador(SWELL_LVL, TAM_SWELL_LVL, temp);
+	for (int i = 0; i < TAM_SWELL_LVL; i++)
+	{
+		if(temp[i] != DEFAULT_SWELL_LVL[i])
+			return 0;
+	}
+	set_registrador(RUN, TAM_RUN, DEFAULT_RUN);
+	get_registrador(RUN, TAM_RUN, temp);
+	for (int i = 0; i < TAM_RUN; i++)
+	{
+		if(temp[i] != DEFAULT_RUN[i])
+			return 0;
+	}
+	set_registrador(CONFIG1, TAM_CONFIG1, DEFAULT_CONFIG1);
+	get_registrador(CONFIG1, TAM_CONFIG1, temp);
+	for (int i = 0; i < TAM_CONFIG1; i++)
+	{
+		if(temp[i] != DEFAULT_CONFIG1[i])
+			return 0;
+	}
+	set_registrador(CFMODE, TAM_CFMODE, DEFAULT_CFMODE);
+	get_registrador(CFMODE, TAM_CFMODE, temp);
+	for (int i = 0; i < TAM_CFMODE; i++)
+	{
+		if(temp[i] != DEFAULT_CFMODE[i])
+			return 0;
+	}
+	set_registrador(ACCMODE, TAM_ACCMODE, DEFAULT_ACCMODE);
+	get_registrador(ACCMODE, TAM_ACCMODE, temp);
+	for (int i = 0; i < TAM_ACCMODE; i++)
+	{
+		if(temp[i] != DEFAULT_ACCMODE[i])
+			return 0;
+	}
+	set_registrador(CONFIG3, TAM_CONFIG3, DEFAULT_CONFIG3);
+	get_registrador(CONFIG3, TAM_CONFIG3, temp);
+	for (int i = 0; i < TAM_CONFIG3; i++)
+	{
+		if(temp[i] != DEFAULT_CONFIG3[i])
+			return 0;
+	}
+	set_registrador(WFB_CFG, TAM_WFB_CFG, DEFAULT_WFB_CFG);
+	get_registrador(WFB_CFG, TAM_WFB_CFG, temp);
+	for (int i = 0; i < TAM_WFB_CFG; i++)
+	{
+		if(temp[i] != DEFAULT_WFB_CFG[i])
+			return 0;
+	}
+	set_registrador(EP_CFG, TAM_EP_CFG, DEFAULT_EP_CFG);
+	get_registrador(EP_CFG, TAM_EP_CFG, temp);
+	for (int i = 0; i < TAM_EP_CFG; i++)
+	{
+		if(temp[i] != DEFAULT_EP_CFG[i])
+			return 0;
+	}
+	return 1;
 }
 
 void set_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado)

@@ -986,7 +986,6 @@
  * @brief Enderecos dos Registradores do ADE9000
  * @see Datasheet do ADE9000 - \git\...
  */
-//#define	DEFAULT_USER_PERIOD		0x00855554
 uint16_t DEFAULT_USER_PERIOD[] = {0x0085, 0x5554};
 uint16_t DEFAULT_VLEVEL[] = {0x0005, 0xAAA1};
 uint16_t DEFAULT_DIP_LVL[] = {0x000F, 0xFFFF};

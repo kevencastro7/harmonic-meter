@@ -44,8 +44,7 @@ void chip_deselect();
 void gpio_init(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed, uint8_t Alternate);
 void gpio_int_init (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOMode_TypeDef GPIO_Mode, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed);
 void dma_init( void );
-void SPI_WriteMulti16(SPI_TypeDef* SPIx, uint16_t* dataOut, uint32_t count);
-void SPI_ReadMulti16(SPI_TypeDef* SPIx, uint16_t* dataIn, uint16_t dummy, uint32_t count);
+int configuracao_default();
 void set_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado,  uint16_t* dado);
 void get_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado);
 #endif /* SPI_H_ */
