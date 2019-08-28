@@ -20,11 +20,9 @@
 
 int main(void)
 {
-	port_init();
 	led_init();
-	uint32_t tempo;
 	controller* ct = (controller *) malloc(sizeof(controller));
-	int tam = 128 * 12;
+	int tam = 1600;
 	int nc = tam/2 + 1;
 	kiss_fftr_cfg cfg = kiss_fftr_alloc( tam ,0 ,NULL,NULL );
 	kiss_fft_scalar* cx_in = (kiss_fft_scalar *) malloc(tam * sizeof(kiss_fft_scalar));
@@ -37,7 +35,7 @@ int main(void)
 
 	while (1)
 	{
-		tempo = port_micros();
+		for(int i = 0;i<150000;i++);
 
 		led_write(GPIO_Pin_All,1);
 		for(int i = 0;i<6;i++)
@@ -45,9 +43,6 @@ int main(void)
 			kiss_fftr( cfg , cx_in , cx_out );
 		}
 		led_write(GPIO_Pin_All,0);
-		tempo = port_micros()-tempo;
-
-		port_sleep_ms(500);
 	}
 
 	free(cx_in);
