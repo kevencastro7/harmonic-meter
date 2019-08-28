@@ -45,8 +45,6 @@ void spi_init( void )
 
 	/* Enable SPI */
 	SPI1->CR1 |= SPI_CR1_SPE;
-	//dma_init();
-
 }
 
 void chip_select_init()
@@ -150,7 +148,7 @@ void dma_init( void )
 	DMA_DeInit(DMA2_Stream3); //SPI1_TX_DMA_STREAM
 	DMA_DeInit(DMA2_Stream2); //SPI1_RX_DMA_STREAM
 
-	DMA_InitStructure.DMA_BufferSize = (uint16_t)4098;
+	DMA_InitStructure.DMA_BufferSize = (uint16_t)1024;
 
 	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable ;
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull ;
@@ -408,9 +406,9 @@ void irq0_init( void )
     /* PD0 is connected to EXTI_Line0, which has EXTI0_IRQn vector */
     NVIC_InitStruct.NVIC_IRQChannel = EXTI0_IRQn;
     /* Set priority */
-    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x00;
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
     /* Set sub priority */
-    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x00;
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
     /* Enable interrupt */
     NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
     /* Add to NVIC */
