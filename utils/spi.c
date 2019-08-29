@@ -132,10 +132,13 @@ void gpio_int_init (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOMode_TypeDef GPI
 	}
 }
 
-void dma_init( void )
+void dma_init(uint32_t* pTmpBuf1 , int page)
 {
 	chip_select();
-	pTmpBuf1[0] = 0x8018;
+	if (page == 0)
+		pTmpBuf1[0] = 0x8018;
+	else
+		pTmpBuf1[0] = 0xC018;
 
 	DMA_InitTypeDef DMA_InitStructure;
 
@@ -148,7 +151,7 @@ void dma_init( void )
 	DMA_DeInit(DMA2_Stream3); //SPI1_TX_DMA_STREAM
 	DMA_DeInit(DMA2_Stream2); //SPI1_RX_DMA_STREAM
 
-	DMA_InitStructure.DMA_BufferSize = (uint16_t)1024;
+	DMA_InitStructure.DMA_BufferSize = (uint16_t)2050;
 
 	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable ;
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull ;
@@ -418,4 +421,13 @@ void irq0_init( void )
 void clear_interrupt( void )
 {
 	set_registrador(STATUS0, TAM_STATUS0, DEFAULT_MASK0);
+}
+
+int get_last_page ( void )
+{
+	uint16_t temp[TAM_WFB_TRG_STAT];
+	get_registrador(WFB_TRG_STAT, TAM_WFB_TRG_STAT, temp);
+	int page = (temp[0] & 0xF000) >> 12;
+	if (page < 8) return 0;
+	else return 1;
 }

@@ -34,7 +34,7 @@
  * @brief  Checks if SPI is enabled and returns value from function if not
  */
 #define SPI_CHECK_ENABLED_RESP(SPIx, val)   if (!((SPIx)->CR1 & SPI_CR1_SPE)) {return (val);}
-uint32_t pTmpBuf1[2048];
+uint32_t pTmpBuf1[1025];
 GPIO_TypeDef* GPIOx_CS;
 uint16_t GPIO_Pin_CS;
 void spi_init( void );
@@ -43,11 +43,12 @@ void chip_select();
 void chip_deselect();
 void gpio_init(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed, uint8_t Alternate);
 void gpio_int_init (GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIOMode_TypeDef GPIO_Mode, GPIOOType_TypeDef GPIO_OType, GPIOPuPd_TypeDef GPIO_PuPd, GPIOSpeed_TypeDef GPIO_Speed);
-void dma_init( void );
+void dma_init(uint32_t* pTmpBuf1 , int page);
 int configuracao_default();
 void set_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado,  uint16_t* dado);
 void get_registrador(uint16_t endereco_registrador, uint32_t tamanho_dado, uint16_t* dado);
 void irq0_gpio_init( void );
 void irq0_init( void );
 void clear_interrupt( void );
+int get_last_page ( void );
 #endif /* SPI_H_ */

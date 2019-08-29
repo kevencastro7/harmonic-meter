@@ -10,7 +10,7 @@
 
 
 #include "stm32f4xx.h"
-#include "port.h"
+//#include "port.h"
 #include "led.h"
 #include "kiss_fft.h"
 #include "kiss_fftr.h"
@@ -18,17 +18,18 @@
 #include "structs.h"
 #include "spi.h"
 #define PI 3.14159265359
-
+int last_page_read = 0;
 /* SCK = PA5, MOSI = PA7, MISO = PA6 */
+controller* ct;
 int main(void)
 {
-	port_init();
+	ct = (controller *) malloc(sizeof(controller));
+	//port_init();
 	led_init();
 	spi_init();
 	irq0_init();
-	led_write(GPIO_Pin_All, configuracao_default());
-	port_sleep_ms(1000);
-	controller* ct = (controller *) malloc(sizeof(controller));
+	led_write(LED6_PIN, configuracao_default());
+	//port_sleep_ms(1000);
 
 	while (1)
 	{
@@ -49,6 +50,7 @@ void EXTI0_IRQHandler(void) {
     if (EXTI_GetITStatus(EXTI_Line0) != RESET) {
         /* Clear interrupt flag */
         EXTI_ClearITPendingBit(EXTI_Line0);
-    	dma_init();
+        int last_page = get_last_page();
+    	dma_init( ct->bust_read, last_page);
     }
 }

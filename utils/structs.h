@@ -81,8 +81,8 @@ typedef struct{
 	meter_json_t 			meter_json;
 	device_json_t			device_json;
 	calibration_wfb_json_t 	calibration_wfb_json;
-	burst_read_t			burst_read;
 	burst_read_t			buffer_read;
 	espectro_t				espectro;
+	uint32_t 				bust_read[1025];
 }controller;
 #endif /* INC_STRUCTS_H_ */

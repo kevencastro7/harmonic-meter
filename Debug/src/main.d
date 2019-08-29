@@ -31,8 +31,6 @@ src/main.o: ../src/main.c \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_can.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dac.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/port.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/utils/led.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/Utilities/stm32f4_discovery.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h \
@@ -109,10 +107,6 @@ C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_can
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dac.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
-
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/port.h:
-
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/utils/led.h:
 
