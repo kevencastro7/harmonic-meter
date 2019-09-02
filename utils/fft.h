@@ -10,14 +10,15 @@
 #include "kiss_fft.h"
 #include "kiss_fftr.h"
 #include "math.h"
+#include "VTipos.h"
+#include "structs.h"
 
 #define PI 3.14159265359
-#define SAMPLES 1536
 
 kiss_fftr_cfg cfg;
-kiss_fft_scalar* cx_in;
-kiss_fft_cpx* cx_out;
 
 void init_fft ( void );
+void burst_to_buffer( controller* ct);
+kiss_fft_scalar sinc4_decoder(uint32_t burst);
 
 #endif /* FFT_H_ */

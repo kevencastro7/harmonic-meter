@@ -33,11 +33,13 @@ src/main.o: ../src/main.c \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/utils/led.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/Utilities/stm32f4_discovery.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/fft.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fftr.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h \
- C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h \
+ C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/utils/spi.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_rcc.h \
  C:/Users/Keven/Documents/workbench/medidor_f4/StdPeriph_Driver/inc/stm32f4xx_gpio.h \
@@ -112,15 +114,19 @@ C:/Users/Keven/Documents/workbench/medidor_f4/utils/led.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/Utilities/stm32f4_discovery.h:
 
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/fft.h:
+
 C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fftr.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/kiss_fft130/kiss_fft.h:
 
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h:
+
 C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h:
 
-C:/Users/Keven/Documents/workbench/medidor_f4/utils/VTipos.h:
+C:/Users/Keven/Documents/workbench/medidor_f4/utils/structs.h:
 
 C:/Users/Keven/Documents/workbench/medidor_f4/utils/spi.h:
 

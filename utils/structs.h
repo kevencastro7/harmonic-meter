@@ -53,25 +53,14 @@ typedef struct {
 	kiss_fft_scalar IB[WFB_ELEMENT_ARRAY_SIZE];
 	kiss_fft_scalar VC[WFB_ELEMENT_ARRAY_SIZE];
 	kiss_fft_scalar IC[WFB_ELEMENT_ARRAY_SIZE];
-}burst_read_t;
+}buffer_read_t;
 
 typedef struct {
-	int    VA_CONT;
 	kiss_fft_cpx VA[ESPECTRO_ARRAY_SIZE];
-
-	int    IA_CONT;
 	kiss_fft_cpx IA[ESPECTRO_ARRAY_SIZE];
-
-	int    VB_CONT;
 	kiss_fft_cpx VB[ESPECTRO_ARRAY_SIZE];
-
-	int    IB_CONT;
 	kiss_fft_cpx IB[ESPECTRO_ARRAY_SIZE];
-
-	int    VC_CONT;
 	kiss_fft_cpx VC[ESPECTRO_ARRAY_SIZE];
-
-	int    IC_CONT;
 	kiss_fft_cpx IC[ESPECTRO_ARRAY_SIZE];
 
 }espectro_t;
@@ -81,8 +70,11 @@ typedef struct{
 	meter_json_t 			meter_json;
 	device_json_t			device_json;
 	calibration_wfb_json_t 	calibration_wfb_json;
-	burst_read_t			buffer_read;
+	buffer_read_t			buffer_read;
 	espectro_t				espectro;
-	uint32_t 				bust_read[1025];
+	uint32_t 				burst_read[1025];
+	int 					count;
+	int 					full_buffer;
+	int                     buffer;
 }controller;
 #endif /* INC_STRUCTS_H_ */
