@@ -23,24 +23,15 @@ int main(void)
 	ct = (controller *) malloc(sizeof(controller));
 	led_init();
 	spi_init();
-	irq0_init();
 	led_write(LED6_PIN, configuracao_default());
+	irq0_init();
 
 	while (1)
 	{
 		if (ct->full_buffer == 1)
 		{
 			ct->full_buffer = 0;
-			if (ct->buffer == 0)
-			{
-				led_write(LED3_PIN, 1);
-				led_write(LED5_PIN, 0);
-			}
-			else
-			{
-				led_write(LED3_PIN, 0);
-				led_write(LED5_PIN, 1);
-			}
+			led_write(LED5_PIN, ct->buffer);
 		}
 	}
 }
@@ -49,6 +40,7 @@ void DMA2_Stream2_IRQHandler(void)
 {
 	/* Clear DMA Stream Transfer Complete interrupt pending bit */
 	DMA_ClearITPendingBit(DMA2_Stream2, DMA_FLAG_TCIF2);
+	led_write(LED3_PIN, 1);
 	chip_deselect();
 	burst_to_buffer(ct);
 	irq0_init();
