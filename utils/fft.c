@@ -15,12 +15,12 @@ void burst_to_buffer( controller* ct)
 {
 	for(int i = 1; i < 1025; i+= 8)
 	{
-		//ct->buffer_read.IA[ct->count] = sinc4_decoder(ct->burst_read[i]);
-		//ct->buffer_read.VA[ct->count] = sinc4_decoder(ct->burst_read[i+1]);
-		ct->buffer_read.IB[ct->count] = ct->burst_read[i+2];
+		ct->buffer_read.IA[ct->count] = sinc4_decoder(ct->burst_read[i]);
+		ct->buffer_read.VA[ct->count] = sinc4_decoder(ct->burst_read[i+1]);
+		ct->buffer_read.IB[ct->count] = sinc4_decoder(ct->burst_read[i+2]);
 		ct->buffer_read.VB[ct->count] = sinc4_decoder(ct->burst_read[i+3]);
-		ct->buffer_read.IC[ct->count] = ct->burst_read[i+4];
-		ct->buffer_read.VC[ct->count] = ct->burst_read[i+5];
+		ct->buffer_read.IC[ct->count] = sinc4_decoder(ct->burst_read[i+4]);
+		ct->buffer_read.VC[ct->count] = sinc4_decoder(ct->burst_read[i+5]);
 		ct->count++;
 		if(ct->count == 1600)
 		{
