@@ -6,9 +6,21 @@
  */
 #include "fft.h"
 
-void init_fft ( void )
+void init_fft ( controller* ct )
 {
 	cfg = kiss_fftr_alloc( WFB_ELEMENT_ARRAY_SIZE/2 ,0 ,NULL,NULL );
+	ct->buffer_read.IA = (kiss_fft_scalar *) malloc(WFB_ELEMENT_ARRAY_SIZE * sizeof(kiss_fft_scalar));
+	ct->espectro.IA = (kiss_fft_cpx *) malloc(ESPECTRO_ARRAY_SIZE * sizeof(kiss_fft_cpx));
+	ct->buffer_read.VA = (kiss_fft_scalar *) malloc(WFB_ELEMENT_ARRAY_SIZE * sizeof(kiss_fft_scalar));
+	ct->espectro.VA = (kiss_fft_cpx *) malloc(ESPECTRO_ARRAY_SIZE * sizeof(kiss_fft_cpx));
+	ct->buffer_read.IB = (kiss_fft_scalar *) malloc(WFB_ELEMENT_ARRAY_SIZE * sizeof(kiss_fft_scalar));
+	ct->espectro.IB = (kiss_fft_cpx *) malloc(ESPECTRO_ARRAY_SIZE * sizeof(kiss_fft_cpx));
+	ct->buffer_read.VB = (kiss_fft_scalar *) malloc(WFB_ELEMENT_ARRAY_SIZE * sizeof(kiss_fft_scalar));
+	ct->espectro.VB = (kiss_fft_cpx *) malloc(ESPECTRO_ARRAY_SIZE * sizeof(kiss_fft_cpx));
+	ct->buffer_read.IC = (kiss_fft_scalar *) malloc(WFB_ELEMENT_ARRAY_SIZE * sizeof(kiss_fft_scalar));
+	ct->espectro.IC = (kiss_fft_cpx *) malloc(ESPECTRO_ARRAY_SIZE * sizeof(kiss_fft_cpx));
+	ct->buffer_read.VC = (kiss_fft_scalar *) malloc(WFB_ELEMENT_ARRAY_SIZE * sizeof(kiss_fft_scalar));
+	ct->espectro.VC = (kiss_fft_cpx *) malloc(ESPECTRO_ARRAY_SIZE * sizeof(kiss_fft_cpx));
 }
 
 void burst_to_buffer( controller* ct)

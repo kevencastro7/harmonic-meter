@@ -24,7 +24,7 @@ int main(void)
 	ct->count = 0;
 	led_init();
 	spi_init();
-	init_fft();
+	init_fft(ct);
 	led_write(LED6_PIN, configuracao_default());
 	irq0_init();
 
