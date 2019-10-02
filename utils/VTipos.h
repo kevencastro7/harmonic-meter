@@ -18,7 +18,7 @@ Vers�o:
 
 typedef uint16_t (*task_routine_t)( uint16_t Tipo , void *Payload );
 #define WFB_ELEMENT_ARRAY_SIZE 3200
-#define ESPECTRO_ARRAY_SIZE WFB_ELEMENT_ARRAY_SIZE/4
+#define ESPECTRO_ARRAY_SIZE WFB_ELEMENT_ARRAY_SIZE/4 + 1
 typedef enum
 {
 	OK = 0,

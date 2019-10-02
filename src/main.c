@@ -34,6 +34,7 @@ int main(void)
 		{
 			ct->full_buffer = 0;
 			led_write(LED5_PIN, ct->buffer);
+			calc_fft(ct);
 		}
 	}
 }

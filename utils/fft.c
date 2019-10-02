@@ -48,3 +48,26 @@ kiss_fft_scalar sinc4_decoder(uint32_t burst)
 	temp = ((float) man);
 	return temp;
 }
+
+void calc_fft( controller* ct)
+{
+	if (ct->buffer == 0)
+	{
+		kiss_fftr( cfg , ct->buffer_read.IA , ct->espectro.IA );
+		kiss_fftr( cfg , ct->buffer_read.VA , ct->espectro.VA );
+		kiss_fftr( cfg , ct->buffer_read.IB , ct->espectro.IB );
+		kiss_fftr( cfg , ct->buffer_read.VB , ct->espectro.VB );
+		kiss_fftr( cfg , ct->buffer_read.IC , ct->espectro.IC );
+		kiss_fftr( cfg , ct->buffer_read.VC , ct->espectro.VC );
+	}
+	else
+	{
+		kiss_fftr( cfg , &ct->buffer_read.IA[1600] , ct->espectro.IA );
+		kiss_fftr( cfg , &ct->buffer_read.VA[1600] , ct->espectro.VA );
+		kiss_fftr( cfg , &ct->buffer_read.IB[1600] , ct->espectro.IB );
+		kiss_fftr( cfg , &ct->buffer_read.VB[1600] , ct->espectro.VB );
+		kiss_fftr( cfg , &ct->buffer_read.IC[1600] , ct->espectro.IC );
+		kiss_fftr( cfg , &ct->buffer_read.VC[1600] , ct->espectro.VC );
+	}
+
+}

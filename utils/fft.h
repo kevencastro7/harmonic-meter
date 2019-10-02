@@ -20,5 +20,6 @@ kiss_fftr_cfg cfg;
 void init_fft ( void );
 void burst_to_buffer( controller* ct);
 kiss_fft_scalar sinc4_decoder(uint32_t burst);
+void calc_fft( controller* ct);
 
 #endif /* FFT_H_ */
