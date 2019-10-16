@@ -33,30 +33,30 @@ int main(void)
 		if (ct->full_buffer == 1)
 		{
 			ct->full_buffer = 0;
-			led_write(LED5_PIN, ct->buffer);
+			led_write(LED5_PIN, 1);
 			calc_fft(ct);
+			led_write(LED5_PIN, 0);
 		}
 	}
 }
 
 void DMA2_Stream2_IRQHandler(void)
 {
+	led_write(LED3_PIN, 1);
 	/* Clear DMA Stream Transfer Complete interrupt pending bit */
 	DMA_ClearITPendingBit(DMA2_Stream2, DMA_FLAG_TCIF2);
 	chip_deselect();
-	led_write(LED3_PIN, 1);
 	burst_to_buffer(ct);
 	irq0_init();
+	led_write(LED3_PIN, 0);
 }
 
 /* Handle PD0 interrupt */
 void EXTI0_IRQHandler(void) {
-    /* Make sure that interrupt flag is set */
-    if (EXTI_GetITStatus(EXTI_Line0) != RESET) {
-        /* Clear interrupt flag */
-        EXTI_ClearITPendingBit(EXTI_Line0);
-        int last_page = get_last_page();
-        led_write(LED4_PIN, last_page);
-    	dma_init( ct->burst_read, last_page);
-    }
+	EXTI_ClearFlag(EXTI_Line0);
+    EXTI_ClearITPendingBit(EXTI_Line0);
+    EXTI_DeInit();
+    int last_page = get_last_page();
+    led_write(LED4_PIN, last_page);
+    dma_init( ct->burst_read, last_page);
 }
