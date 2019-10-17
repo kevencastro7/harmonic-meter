@@ -20,27 +20,6 @@
 controller* ct;
 int main(void)
 {
-<<<<<<< HEAD
-	led_init();
-	controller* ct = (controller *) malloc(sizeof(controller));
-	int tam = 1600;
-	int nc = tam/2 + 1;
-	kiss_fftr_cfg cfg = kiss_fftr_alloc( tam ,0 ,NULL,NULL );
-	kiss_fft_scalar* cx_in = (kiss_fft_scalar *) malloc(tam * sizeof(kiss_fft_scalar));
-	kiss_fft_cpx* cx_out = (kiss_fft_cpx *) malloc(nc * sizeof(kiss_fft_cpx));
-
-	for (int i = 0; i<tam;i++)
-	{
-		cx_in[i] = cos(2*PI*i/128) + 0.5*cos(4*PI*i/128);
-	}
-
-	while (1)
-	{
-		for(int i = 0;i<150000;i++);
-
-		led_write(GPIO_Pin_All,1);
-		for(int i = 0;i<6;i++)
-=======
 	ct = (controller *) malloc(sizeof(controller));
 	ct->count = 0;
 	led_init();
@@ -52,17 +31,12 @@ int main(void)
 	while (1)
 	{
 		if (ct->full_buffer == 1)
->>>>>>> ade9000
 		{
 			ct->full_buffer = 0;
 			led_write(LED5_PIN, 1);
 			calc_fft(ct);
 			led_write(LED5_PIN, 0);
 		}
-<<<<<<< HEAD
-		led_write(GPIO_Pin_All,0);
-=======
->>>>>>> ade9000
 	}
 }
 
