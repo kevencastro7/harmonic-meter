@@ -7,19 +7,28 @@ C_SRCS += \
 ../utils/debug.c \
 ../utils/fft.c \
 ../utils/led.c \
-../utils/port.c 
+../utils/port.c \
+../utils/spi.c \
+../utils/tm_stm32f4_gpio.c \
+../utils/tm_stm32f4_spi.c 
 
 OBJS += \
 ./utils/debug.o \
 ./utils/fft.o \
 ./utils/led.o \
-./utils/port.o 
+./utils/port.o \
+./utils/spi.o \
+./utils/tm_stm32f4_gpio.o \
+./utils/tm_stm32f4_spi.o 
 
 C_DEPS += \
 ./utils/debug.d \
 ./utils/fft.d \
 ./utils/led.d \
-./utils/port.d 
+./utils/port.d \
+./utils/spi.d \
+./utils/tm_stm32f4_gpio.d \
+./utils/tm_stm32f4_spi.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

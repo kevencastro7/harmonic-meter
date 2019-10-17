@@ -6,16 +6,16 @@
  */
 #include "led.h"
 
-																	//------------------COMENTÁRIOS-------------------//
+																	//------------------COMENTÃ�RIOS-------------------//
 
-void led_init ( void )												// Inicialização
+void led_init ( void )												// InicializaÃ§Ã£o
 {
 		GPIO_InitTypeDef gpio;										// Struct da GPIO
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);		// Ativar clock da GPIO
-		gpio.GPIO_Pin = GPIO_Pin_All; //LED4_PIN | LED3_PIN | LED5_PIN | LED6_PIN;  // Pinos utilizados
-		gpio.GPIO_Mode = GPIO_Mode_OUT;								// Modo de saída
+		gpio.GPIO_Pin = LED4_PIN | LED3_PIN | LED5_PIN | LED6_PIN;  // Pinos utilizados
+		gpio.GPIO_Mode = GPIO_Mode_OUT;								// Modo de saÃ­da
 		gpio.GPIO_Speed = GPIO_Speed_50MHz;							// Velocidade do GPIO
-		GPIO_Init(GPIOD, &gpio);									// Inicialização da GPIO
+		GPIO_Init(GPIOD, &gpio);									// InicializaÃ§Ã£o da GPIO
 
 }
 

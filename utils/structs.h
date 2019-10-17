@@ -10,6 +10,7 @@
 
 #include "VTipos.h"
 #include "stm32f4xx.h"
+#include "kiss_fft.h"
 
 typedef struct {
 	float V;
@@ -46,38 +47,22 @@ typedef struct {
 }calibration_wfb_json_t;
 
 typedef struct {
-  int16_t VA[WFB_ELEMENT_ARRAY_SIZE];
-  int16_t IA[WFB_ELEMENT_ARRAY_SIZE];
-  int16_t VB[WFB_ELEMENT_ARRAY_SIZE];
-  int16_t IB[WFB_ELEMENT_ARRAY_SIZE];
-  int16_t VC[WFB_ELEMENT_ARRAY_SIZE];
-  int16_t IC[WFB_ELEMENT_ARRAY_SIZE];
-}burst_read_t;
+	kiss_fft_scalar* VA;
+	kiss_fft_scalar* IA;
+	kiss_fft_scalar* VB;
+	kiss_fft_scalar* IB;
+	kiss_fft_scalar* VC;
+	kiss_fft_scalar* IC;
+}buffer_read_t;
 
 typedef struct {
-	int    VA_CONT;
-	float VA_ABS[ESPECTRO_ARRAY_SIZE];
-	float VA_ANG[ESPECTRO_ARRAY_SIZE];
+	kiss_fft_cpx* VA;
+	kiss_fft_cpx* IA;
+	kiss_fft_cpx* VB;
+	kiss_fft_cpx* IB;
+	kiss_fft_cpx* VC;
+	kiss_fft_cpx* IC;
 
-	int    IA_CONT;
-	float IA_ABS[ESPECTRO_ARRAY_SIZE];
-	float IA_ANG[ESPECTRO_ARRAY_SIZE];
-
-	int    VB_CONT;
-	float VB_ABS[ESPECTRO_ARRAY_SIZE];
-	float VB_ANG[ESPECTRO_ARRAY_SIZE];
-
-	int    IB_CONT;
-	float IB_ABS[ESPECTRO_ARRAY_SIZE];
-	float IB_ANG[ESPECTRO_ARRAY_SIZE];
-
-	int    VC_CONT;
-	float VC_ABS[ESPECTRO_ARRAY_SIZE];
-	float VC_ANG[ESPECTRO_ARRAY_SIZE];
-
-	int    IC_CONT;
-	float IC_ABS[ESPECTRO_ARRAY_SIZE];
-	float IC_ANG[ESPECTRO_ARRAY_SIZE];
 }espectro_t;
 
 typedef struct{
@@ -85,9 +70,11 @@ typedef struct{
 	meter_json_t 			meter_json;
 	device_json_t			device_json;
 	calibration_wfb_json_t 	calibration_wfb_json;
-	burst_read_t			burst_read;
-	burst_read_t			buffer_read;
+	buffer_read_t			buffer_read;
 	espectro_t				espectro;
+	uint32_t 				burst_read[1025];
+	int 					count;
+	int 					full_buffer;
+	int                     buffer;
 }controller;
-
 #endif /* INC_STRUCTS_H_ */
