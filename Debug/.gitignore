@@ -1,0 +1,10 @@
+/StdPeriph_Driver/
+/Utilities/
+/kiss_fft130/
+/makefile
+/objects.list
+/objects.mk
+/sources.mk
+/src/
+/startup/
+/utils/
