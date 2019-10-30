@@ -47,21 +47,21 @@ typedef struct {
 }calibration_wfb_json_t;
 
 typedef struct {
-	kiss_fft_scalar* VA;
-	kiss_fft_scalar* IA;
-	kiss_fft_scalar* VB;
-	kiss_fft_scalar* IB;
-	kiss_fft_scalar* VC;
-	kiss_fft_scalar* IC;
+	kiss_fft_scalar VA[WFB_ELEMENT_ARRAY_SIZE];
+	kiss_fft_scalar IA[WFB_ELEMENT_ARRAY_SIZE];
+	kiss_fft_scalar VB[WFB_ELEMENT_ARRAY_SIZE];
+	kiss_fft_scalar IB[WFB_ELEMENT_ARRAY_SIZE];
+	/*kiss_fft_scalar VC[WFB_ELEMENT_ARRAY_SIZE];
+	kiss_fft_scalar IC[WFB_ELEMENT_ARRAY_SIZE];*/
 }buffer_read_t;
 
 typedef struct {
-	kiss_fft_cpx* VA;
-	kiss_fft_cpx* IA;
-	kiss_fft_cpx* VB;
-	kiss_fft_cpx* IB;
-	kiss_fft_cpx* VC;
-	kiss_fft_cpx* IC;
+	kiss_fft_cpx VA[ESPECTRO_ARRAY_SIZE];
+	kiss_fft_cpx IA[ESPECTRO_ARRAY_SIZE];
+	kiss_fft_cpx VB[ESPECTRO_ARRAY_SIZE];
+	kiss_fft_cpx IB[ESPECTRO_ARRAY_SIZE];
+	/*kiss_fft_cpx VC[ESPECTRO_ARRAY_SIZE];
+	kiss_fft_cpx IC[ESPECTRO_ARRAY_SIZE];*/
 
 }espectro_t;
 

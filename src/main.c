@@ -12,7 +12,6 @@
 #include "stm32f4xx.h"
 #include "led.h"
 #include "fft.h"
-#include "math.h"
 #include "structs.h"
 #include "spi.h"
 #define PI 3.14159265359

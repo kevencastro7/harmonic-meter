@@ -136,9 +136,9 @@ void dma_init(uint32_t* pTmpBuf1 , int page)
 {
 	chip_select();
 	if (page == 0)
-		pTmpBuf1[0] = 0x8018;
+		pTmpBuf1[0] = 0x8008;
 	else
-		pTmpBuf1[0] = 0xC018;
+		pTmpBuf1[0] = 0xC008;
 
 	DMA_InitTypeDef DMA_InitStructure;
 
