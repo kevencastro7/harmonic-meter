@@ -4,19 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../utils/debug.c \
 ../utils/fft.c \
 ../utils/led.c \
 ../utils/spi.c 
 
 OBJS += \
-./utils/debug.o \
 ./utils/fft.o \
 ./utils/led.o \
 ./utils/spi.o 
 
 C_DEPS += \
-./utils/debug.d \
 ./utils/fft.d \
 ./utils/led.d \
 ./utils/spi.d 
